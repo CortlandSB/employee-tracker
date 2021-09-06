@@ -231,7 +231,7 @@ function updateRole() {
         {
           type: "list",
           name: "employeeId",
-          message: "Which employee's role do you want to update?",
+          message: "Which employee's role will be updated?",
           choices: employeeChoices
         }
       ])
@@ -249,7 +249,7 @@ function updateRole() {
                 {
                   type: "list",
                   name: "roleId",
-                  message: "Which role do you want to assign the selected employee?",
+                  message: "Which role should this employee have?",
                   choices: roleChoices
                 }
               ])
@@ -274,7 +274,7 @@ function updateEmployeeManager() {
         {
           type: "list",
           name: "employeeId",
-          message: "Which employee's manager do you want to update?",
+          message: "Which employee's manager shall be updated?",
           choices: employeeChoices
         }
       ])
@@ -293,7 +293,7 @@ function updateEmployeeManager() {
                   type: "list",
                   name: "managerId",
                   message:
-                    "Which employee do you want to set as manager for the selected employee?",
+                    "Who shall be the manager for the selected employee?",
                   choices: managerChoices
                 }
               ])
@@ -327,16 +327,16 @@ function addRole() {
       question([
         {
           name: "title",
-          message: "What is the name of the role?"
+          message: "What is this role called?"
         },
         {
           name: "salary",
-          message: "What is the salary of the role?"
+          message: "What is its salary?"
         },
         {
           type: "list",
           name: "department_id",
-          message: "Which department does the role belong to?",
+          message: "Which department has this role?",
           choices: departmentChoices
         }
       ])
@@ -362,7 +362,7 @@ function removeRole() {
           type: "list",
           name: "roleId",
           message:
-            "Which role do you want to remove? (Warning: This will also remove employees)",
+            "Which role shall be removed?",
           choices: roleChoices
         }
       ])
@@ -386,7 +386,7 @@ function addDepartment() {
   question([
     {
       name: "name",
-      message: "What is the name of the department?"
+      message: "What is the department's name?"
     }
   ])
     .then(res => {
@@ -410,7 +410,7 @@ function removeDepartment() {
         type: "list",
         name: "departmentId",
         message:
-          "Which department would you like to remove? (Warning: This will also remove associated roles and employees)",
+          "Which department shall be removed?",
         choices: departmentChoices
       })
         .then(res => db.removeDepartment(res.departmentId))
