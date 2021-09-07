@@ -1,5 +1,5 @@
 const db = require("./db");
-const { question } = require("inquirer");
+const { prompt } = require("inquirer");
 const logo = require("asciiart-logo");
 require("console.table");
 
@@ -10,11 +10,11 @@ function initialize() {
 
   console.log(textLogo);
 
-  loadQuestion();
+  loadPrompt();
 }
 
-function loadQuestion() {
-  question([
+function loadPrompt() {
+  prompt([
     {
       type: "list",
       name: "choice",
@@ -134,7 +134,7 @@ function viewEmployees() {
       console.log("\n");
       console.table(employees);
     })
-    .then(() => loadQuestion());
+    .then(() => loadPrompt());
 }
 
 function viewEmployeesByDepartment() {
@@ -146,7 +146,7 @@ function viewEmployeesByDepartment() {
         value: id
       }));
 
-      question([
+      prompt([
         {
           type: "list",
           name: "departmentId",
@@ -160,7 +160,7 @@ function viewEmployeesByDepartment() {
           console.log("\n");
           console.table(employees);
         })
-        .then(() => loadQuestion())
+        .then(() => loadPrompt())
     });
 }
 
@@ -173,7 +173,7 @@ function viewEmployeesByManager() {
         value: id
       }));
 
-      question([
+      prompt([
         {
           type: "list",
           name: "managerId",
@@ -191,7 +191,7 @@ function viewEmployeesByManager() {
             console.table(employees);
           }
         })
-        .then(() => loadQuestion())
+        .then(() => loadPrompt())
     });
 }
 
@@ -204,7 +204,7 @@ function removeEmployee() {
         value: id
       }));
 
-      question([
+      prompt([
         {
           type: "list",
           name: "employeeId",
@@ -214,7 +214,7 @@ function removeEmployee() {
       ])
         .then(res => db.removeEmployee(res.employeeId))
         .then(() => console.log("Employee was removed from database."))
-        .then(() => loadQuestion())
+        .then(() => loadPrompt())
     })
 }
 
@@ -227,7 +227,7 @@ function updateRole() {
         value: id
       }));
 
-      question([
+      prompt([
         {
           type: "list",
           name: "employeeId",
@@ -245,7 +245,7 @@ function updateRole() {
                 value: id
               }));
 
-              question([
+              prompt([
                 {
                   type: "list",
                   name: "roleId",
@@ -255,7 +255,7 @@ function updateRole() {
               ])
                 .then(res => db.updateRole(employeeId, res.roleId))
                 .then(() => console.log("Updated employee's role"))
-                .then(() => loadQuestion())
+                .then(() => loadPrompt())
             });
         });
     })
@@ -270,7 +270,7 @@ function updateEmployeeManager() {
         value: id
       }));
 
-      question([
+      prompt([
         {
           type: "list",
           name: "employeeId",
@@ -288,7 +288,7 @@ function updateEmployeeManager() {
                 value: id
               }));
 
-              question([
+              prompt([
                 {
                   type: "list",
                   name: "managerId",
@@ -299,7 +299,7 @@ function updateEmployeeManager() {
               ])
                 .then(res => db.updateEmployeeManager(employeeId, res.managerId))
                 .then(() => console.log("Updated employee's manager"))
-                .then(() => loadQuestion())
+                .then(() => loadPrompt())
             })
         })
     })
@@ -312,7 +312,7 @@ function viewRoles() {
       console.log("\n");
       console.table(roles);
     })
-    .then(() => loadQuestion());
+    .then(() => loadPrompt());
 }
 
 function addRole() {
@@ -324,7 +324,7 @@ function addRole() {
         value: id
       }));
 
-      question([
+      prompt([
         {
           name: "title",
           message: "What is this role called?"
@@ -343,7 +343,7 @@ function addRole() {
         .then(role => {
           db.createRole(role)
             .then(() => console.log(`Added ${role.title} to the database`))
-            .then(() => loadQuestion())
+            .then(() => loadPrompt())
         })
     })
 }
@@ -357,7 +357,7 @@ function removeRole() {
         value: id
       }));
 
-      question([
+      prompt([
         {
           type: "list",
           name: "roleId",
@@ -368,7 +368,7 @@ function removeRole() {
       ])
         .then(res => db.removeRole(res.roleId))
         .then(() => console.log("Removed role from the database"))
-        .then(() => loadQuestion())
+        .then(() => loadPrompt())
     })
 }
 
@@ -379,11 +379,11 @@ function viewDepartments() {
       console.log("\n");
       console.table(departments);
     })
-    .then(() => loadQuestion());
+    .then(() => loadPrompt());
 }
 
 function addDepartment() {
-  question([
+  prompt([
     {
       name: "name",
       message: "What is the department's name?"
@@ -393,7 +393,7 @@ function addDepartment() {
       let name = res;
       db.createDepartment(name)
         .then(() => console.log(`Added ${name.name} to the database`))
-        .then(() => loadQuestion())
+        .then(() => loadPrompt())
     })
 }
 
@@ -406,7 +406,7 @@ function removeDepartment() {
         value: id
       }));
 
-      question({
+      prompt({
         type: "list",
         name: "departmentId",
         message:
@@ -415,7 +415,7 @@ function removeDepartment() {
       })
         .then(res => db.removeDepartment(res.departmentId))
         .then(() => console.log(`Removed department from the database`))
-        .then(() => loadQuestion())
+        .then(() => loadPrompt())
     })
 }
 
@@ -426,11 +426,11 @@ function viewUtilizedBudgetByDepartment() {
       console.log("\n");
       console.table(departments);
     })
-    .then(() => loadQuestion());
+    .then(() => loadPrompt());
 }
 
 function addEmployee() {
-  question([
+  prompt([
     {
       name: "first_name",
       message: "Enter employee's first name."
@@ -452,7 +452,7 @@ function addEmployee() {
             value: id
           }));
 
-          question({
+          prompt({
             type: "list",
             name: "roleId",
             message: "What is the employee's role?",
@@ -471,7 +471,7 @@ function addEmployee() {
 
                   managerChoices.unshift({ name: "None", value: null });
 
-                  question({
+                  prompt({
                     type: "list",
                     name: "managerId",
                     message: "Who is the employee's manager?",
@@ -490,7 +490,7 @@ function addEmployee() {
                     .then(() => console.log(
                       `Added ${firstName} ${lastName} to the database`
                     ))
-                    .then(() => loadQuestion())
+                    .then(() => loadPrompt())
                 })
             })
         })
